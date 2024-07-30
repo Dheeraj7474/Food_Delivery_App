@@ -9,6 +9,7 @@ import ItemList from "./ItemList";
 export const RestaurantMenu = () => {
     const { resId } = useParams();
     const Data = useRestaurantMenu(resId);
+    console.log("data is",Data)
     const [showItems, setShowItems] = useState(null);
     const [curRes, setCurRes] = useState({});
     const [i,seti] = useState(0)
@@ -21,7 +22,7 @@ export const RestaurantMenu = () => {
     }
 
     const bar = Data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
-
+    const resname = Data?.cards[2]?.card?.card?.info?.name
     
 
 
@@ -42,13 +43,15 @@ export const RestaurantMenu = () => {
 
     return (
         <div data-testid='RCfield'>
+            <h1 className="m-2 pl-2 font-bold text-3xl mb-4">{resname}</h1>
             {bar.map((e, index) => {
                 if (e?.card?.card["@type"] === "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory") {
                     const categoryId = e?.card?.card?.title;
                     const items = e?.card?.card?.itemCards;
-
+                    console.log("bar",bar)
                     return (
                         <div key={index}>
+                            
                             <div
                                 className="flex cursor-pointer justify-between text-center my-3 mx-auto w-8/12 border-b-8"
                                 onClick={() => handleAccordion(categoryId, items)}
